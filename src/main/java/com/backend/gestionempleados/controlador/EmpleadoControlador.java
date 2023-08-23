@@ -1,10 +1,12 @@
 package com.backend.gestionempleados.controlador;
 
 
+import com.backend.gestionempleados.excepciones.ResourceNotFoundException;
 import com.backend.gestionempleados.modelo.Empleado;
 import com.backend.gestionempleados.repositorio.EmpleadoRepositorio;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,5 +28,17 @@ public class EmpleadoControlador {
     public Empleado guardarEmpleado(@RequestBody Empleado empleado){
         return repositorio.save(empleado);
    }
+
+
+    @GetMapping("/empleados/{id}")
+    public ResponseEntity<Empleado> obtenerEmpleadoPorId(@PathVariable Long id){
+
+        Empleado empleado = repositorio.findById(id).orElseThrow(
+                ()->    new ResourceNotFoundException("no existe el id "+id)
+        );
+
+        return ResponseEntity.ok(empleado);
+    }
+
 
 }
