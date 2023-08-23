@@ -5,10 +5,7 @@ import com.backend.gestionempleados.modelo.Empleado;
 import com.backend.gestionempleados.repositorio.EmpleadoRepositorio;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,4 +21,10 @@ public class EmpleadoControlador {
     public List<Empleado> listarTodosEmpleados(){
         return this.repositorio.findAll();
     }
+
+   @PostMapping("/empleados")
+    public Empleado guardarEmpleado(@RequestBody Empleado empleado){
+        return repositorio.save(empleado);
+   }
+
 }
