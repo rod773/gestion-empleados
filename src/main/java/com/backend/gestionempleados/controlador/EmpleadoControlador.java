@@ -41,4 +41,23 @@ public class EmpleadoControlador {
     }
 
 
+    @PutMapping("/empleados/{id}")
+    public ResponseEntity<Empleado> actualizarEmpleado(@PathVariable Long id,@RequestBody Empleado detallesEmpleado){
+
+        Empleado empleado = repositorio.findById(id).orElseThrow(
+                ()->    new ResourceNotFoundException("no existe el id "+id)
+        );
+
+        empleado.setNombre(detallesEmpleado.getNombre());
+        empleado.setApellido(detallesEmpleado.getApellido());
+        empleado.setEmail(detallesEmpleado.getEmail());
+
+
+        Empleado empleadoActualizado = repositorio.save(empleado);
+
+        return ResponseEntity.ok(empleadoActualizado);
+    }
+
+
+
 }
